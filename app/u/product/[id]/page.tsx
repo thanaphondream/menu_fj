@@ -66,11 +66,11 @@ export default function Product({params}:Props) {
 
     const PostApiCart = async () => {
         try {
-            const token = localStorage.getItem('token')
-            if (!token) {
-                alert("No token")
-                return
-            }
+            // const token = localStorage.getItem('token')
+            // if (!token) {
+            //     alert("No token")
+            //     return
+            // }
 
             const users = await CheckUser(token)
 

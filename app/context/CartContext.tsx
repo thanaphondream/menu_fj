@@ -108,8 +108,8 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
 
     const CartSave = async (carts: Cart) => {
         try {
-            const token = getToken()
-            if (!token) return
+            // const token = getToken()
+            // if (!token) return
             //  if(!user){
             //     return
             // }

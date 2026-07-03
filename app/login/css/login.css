@@ -1,0 +1,108 @@
+.cart-login{
+    padding: 50px;
+    max-width: 800px;
+    width: 90%;
+    background: #f7f5f3;
+    border-radius: 20px;
+     box-shadow:
+        0 10px 30px rgba(0,0,0,.08);
+    margin: 50px auto;
+}
+
+.cart-text{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    text-align: center;
+}
+
+.text-01{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-icon{
+    font-size: 70px;
+    color: #8b5e3c;
+}
+
+.cart-text h1{
+    font-size: 32px;
+    color: #5d3820;
+    margin: 0;
+}
+
+.cart-text h4{
+    color: rgb(160, 97, 1);
+    font-weight: 400;
+    margin: 0;
+}
+/* .cart-login div{
+   display: block;
+} */
+
+.input-group{
+    margin-top: 15px;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    color: #050505;
+    font-size: 13px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #fcfcfc;
+  color: rgb(0, 0, 0);
+    border: rgb(7, 5, 66) 1px solid;
+  outline: none;
+  transition: 0.2s;
+}
+
+.box-bu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-bu button{
+    margin: 10px auto;
+    background-color: rgb(16, 33, 16);
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.3s;
+    color: #fcfcfc;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    font-size: 20px;
+     box-shadow:
+        0 10px 30px rgba(0,0,0,.08);
+}
+
+.sign-up{
+    text-align: center;
+}
+
+.box-link{
+    color: blue;
+}
+
+.box-link:hover{
+    color: rgb(80, 80, 214);
+}

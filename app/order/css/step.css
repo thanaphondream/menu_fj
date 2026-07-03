@@ -1,0 +1,85 @@
+.card-button{
+    display: flex;
+    align-items: c;
+    background-color: rgb(248, 247, 245);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    justify-content: center;
+    height: 80px;
+
+  top: 0;
+}
+
+.btn-back{
+    font-size: 20px;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.box-th{
+    text-align: center;
+    margin-right: auto;
+    font-size: 21px;
+    margin-top: 20px;
+}
+
+.step-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    /* margin: 30px 0; */
+
+    background-color: rgb(252, 244, 231);
+
+    height: 150px;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 40px;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #c96b1b;
+    color: #c96b1b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    font-size: 19px;
+    font-weight: bold;
+
+    z-index: 2;
+}
+
+.step-circle.active {
+    background: #c96b1b;
+    color: white;
+}
+
+.step-line {
+    width: 250px;
+    height: 2px;
+    background: #e0d6d1;
+    margin: 0 10px;
+}
+
+.step-line.active {
+    background: #c96b1b;
+}
+
+.step-item span {
+    position: absolute;
+    top: 45px;
+    left: 1%;
+    transform: translateX(-5%);
+    font-size: 19px;
+}

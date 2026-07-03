@@ -1,0 +1,94 @@
+.cart-signin{
+    background: rgb(244, 245, 246);
+    padding: 50px;
+    max-width: 1500px;
+    width: 90%;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.08);
+    margin: 50px auto;
+    border-radius: 20px;
+}
+
+.input-cart{
+    margin-top: 15px;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.input-cart label {
+    color: #050505;
+    font-size: 13px;
+}
+
+.input-cart input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #fcfcfc;
+  color: rgb(0, 0, 0);
+    border: rgb(7, 5, 66) 1px solid;
+  outline: none;
+  transition: 0.2s;
+}
+
+.box-button button{
+    margin: 10px auto;
+    background-color: rgb(12, 16, 12);
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.3s;
+    color: #fcfcfc;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    font-size: 20px;
+     box-shadow:
+        0 10px 30px rgba(0,0,0,.08);
+}
+
+.cart-text h1{
+    text-align: center;
+    font-size: 26px;
+}
+
+.password-box{
+    position: relative;
+}
+
+.password-box input{
+    padding-right: 45px;
+}
+
+.eye-icon{
+    position: absolute;
+
+    right: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    cursor: pointer;
+
+    color: #777;
+}
+
+.eye-icon:hover{
+    color: #333;
+}
+
+.error-text{
+    color: red;
+    /* text-align: center; */
+    margin-bottom: 15px;
+}
+
+.success-text{
+    color: green;
+    /* text-align: center; */
+    margin-bottom: 15px;
+}

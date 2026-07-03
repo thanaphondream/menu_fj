@@ -25,7 +25,7 @@ export default function Login() {
     const router = useRouter();
 
     const usersPost = async () => {
-    try{
+    try {
         const rs = await fetch("https://menu-back-hemk.onrender.com/api/login", {
         method: "POST",
         credentials: "include",
@@ -33,17 +33,18 @@ export default function Login() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(users),
-    });
+        });
 
-    const data = await rs.json();
-            
-    if (!rs.ok) {
+        const data = await rs.json();
+
+        if (!rs.ok) {
         setError(data.message || "เกิดข้อผิดพลาด");
         return;
-    }
+        }
+
 
     login(data.user, data.token)
-    localStorage.setItem('token', data.token)
+
     alert("Login สำเร็จ");
 
     router.push('/u')

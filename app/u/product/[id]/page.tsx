@@ -72,7 +72,7 @@ export default function Product({params}:Props) {
             //     return
             // }
 
-            const users = await CheckUser(token)
+            const users = await CheckUser("ffdd")
 
             if (!users) {
                 alert("Login not found")

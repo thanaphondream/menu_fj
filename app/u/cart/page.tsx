@@ -12,11 +12,13 @@ export default function Carts() {
     const router = useRouter();
     const {cart, loadings, UpdateQuantity} = useCart()
     const [quantitys, setQuantity] = useState<number>()
-    // useEffect(() => {
-    // if (!loading && !user) {
-    //     router.push("/login")
-    // }
-    // }, [loading, user])
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace("/login")
+        }
+    }, [loading, user, router])
+    
     const updataeQuantity = (
         quantity: number,
         id: number,
@@ -54,6 +56,50 @@ export default function Carts() {
         }
     };
 
+
+
+    if (loading) {
+        return <span className="loading loading-spinner loading-xl"></span>
+    }
+
+    if (!user) {
+        return (
+            <div className="empty-cart">
+                <h2>กรุณาเข้าสู่ระบบ</h2>
+                <p>คุณต้องเข้าสู่ระบบก่อนใช้งานตะกร้าสินค้า</p>
+
+                <button
+                    onClick={() => router.push("/login")}
+                    className="bt-total"
+                >
+                    ไปหน้าเข้าสู่ระบบ
+                </button>
+            </div>
+        );
+    }
+    
+    const isEmpty =
+        !cart ||
+        !cart.cart ||
+        cart.cart.items.length === 0;
+
+    if (isEmpty) {
+    return (
+        <div className="empty-cart">
+            <h2>🛒 ตะกร้าของคุณว่าง</h2>
+
+            <p>ยังไม่มีสินค้าในตะกร้า</p>
+
+            <button
+                className="bt-total"
+                onClick={() => router.push("/u/menu")}
+            >
+                เลือกซื้อสินค้า
+            </button>
+        </div>
+    );
+}
+
     return (
         <div>
             <div className="catd-cartItem">
@@ -69,9 +115,13 @@ export default function Carts() {
                                 <img src={m.menuItem.image} alt={m.menuItem.name} />
                             </div>
                             <div className="box-text01" key={m.id}>
-                                <p>{m.menuItem.name}</p>
-                                <p>{m.menuItem.description}</p>
-                                <span className="box-price">฿{m.menuItem.price}</span>
+                                <div>
+                                    <p>{m.menuItem.name}</p>
+                                </div>
+                                <div>
+                                    {/* <p>{m.menuItem.description}</p> */}
+                                    <span className="box-price">฿{m.menuItem.price}</span>
+                                </div>
                             </div>
                             
                             <div className="box-quantity">
@@ -148,6 +198,8 @@ export default function Carts() {
                    }}>ชำระเงิน </button>
                 </div>
             </div>
+
+             
         </div>
     )
 }

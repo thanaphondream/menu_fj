@@ -73,7 +73,7 @@ export default function Tracking({params}:Props){
     const checkOrderStatus = (number: number, orderS: number, icon: string, s: string) => {
         if(number === orderS){
            if(number === 5 && order?.status === s){
-                return (<div className="">55</div>)
+                return (<div className="">✓</div>)
            }
            
             return (
@@ -110,7 +110,7 @@ export default function Tracking({params}:Props){
         }
 
         return (
-            <p className="flex items-center gap-[8px]"> ✓ ติดต่อร้านอาหาร</p>
+            <p className="flex items-center gap-[8px]"> ✓ สำเร็จแล้ว</p>
         )
     };
     useEffect(() => {

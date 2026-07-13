@@ -62,6 +62,15 @@ interface Drivers{
     vehicle: string;
 }
 
+export interface MenuTop{
+    id: number;
+    name: string;
+    image: string;
+    price: number;
+    description: string;
+    totalSold: number;
+}
+
 type AuthAddRess = {
     AddressPosts: ((address: Address) => Promise<void>)
     OrderPost: ((addressId: number) => Promise<void>)
@@ -69,6 +78,8 @@ type AuthAddRess = {
     setOrderId: ((orderId: number) => void)
     order: Order | null
     orderFin: OrderAll[] | null
+    ordertop: MenuTop[] | null
+    setLimit: ((limit: number) => void)
 }
 
 
@@ -79,20 +90,23 @@ export const AuthOrderAll = ({ children }: { children: React.ReactNode }) => {
     const [order, setOrder] = useState<Order | null>(null)
     const [orderId, setOrderId] = useState<number | null>(null)
     const [orderFin , setOrderFin] = useState<OrderAll[] | null>(null)
+    const [ordertop, setOrdertop] = useState<MenuTop[] | null >(null)
+    const [limit, setLimit] = useState<number>(2)
+
     const [loadings, setLoadings] = useState(false);
     
     const {user, loading} = useAuth()
-    const {CartsAPI} = useCart()
     
     const router = useRouter();
+    const token = localStorage.getItem("token")
 
     const AddressPosts = async(address: Address) => {
         try{
-            const re = await fetch("https://menu-back-hemk.onrender.com/address/address",
+            const re = await fetch("http://localhost:8001/address/address",
                 {
                     method: "POST",
-                    credentials: "include",
                      headers: {
+                        "Authorization": `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(address),
@@ -110,17 +124,20 @@ export const AuthOrderAll = ({ children }: { children: React.ReactNode }) => {
     }
     useEffect(() => {
         AddressGet()
-        orderGetAll();
-    }, [user])
+        orderGetAll()
+    }, [token])
 
     const AddressGet = async () =>{
         try{
             if (!user) return
-            const rs = await fetch("https://menu-back-hemk.onrender.com/address/address", {
-                credentials: "include"
+            const rs = await fetch("http://localhost:8001/address/address", {
+                 headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
             })
 
             const data = await rs.json()
+
             if(!rs.ok) return;
 
             setAddresss(data.message)
@@ -132,12 +149,12 @@ export const AuthOrderAll = ({ children }: { children: React.ReactNode }) => {
 
     const OrderPost = async (addressId: number) => {
         try{
-            const rs = await fetch("https://menu-back-hemk.onrender.com/order/orders", {
+            const rs = await fetch("http://localhost:8001/order/orders", {
                 method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                 headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
                 body: JSON.stringify({addressId})
             })
 
@@ -164,14 +181,15 @@ export const AuthOrderAll = ({ children }: { children: React.ReactNode }) => {
 
     const OrderGet = async () => {
         try{
-            const rs = await fetch("https://menu-back-hemk.onrender.com/order/tracking/"+ orderId, {
-                credentials: "include",
+            const rs = await fetch("http://localhost:8001/order/tracking/"+ orderId, {
+                 headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
             })
 
             const data = await rs.json()
 
             if(!rs.ok){
-                router.push('/login')
                return
             }
 
@@ -186,24 +204,44 @@ export const AuthOrderAll = ({ children }: { children: React.ReactNode }) => {
 
     const orderGetAll = async () => {
         try{
-            const rs = await fetch("https://menu-back-hemk.onrender.com/order/tracking", {
-                credentials: "include",
+            if (!token) return;
+            const rs = await fetch("http://localhost:8001/order/tracking", {
+                 headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
             })
             const data = await rs.json()
 
             if(!rs.ok){
-                router.push('/login')
                 return;
             }
-            console.log("ddfffs", data)
+
             setOrderFin(data)
         }catch(err){
             console.error(err)
         }
     }
 
+    useEffect(() => {
+        OderTopmenu();
+    }, [limit])
+
+    const OderTopmenu = async() => {
+        try{
+            const rs = await fetch(`http://localhost:8001/order/ordertopmenu?limit=${limit}`)
+
+            const data = await rs.json()
+
+            if(!rs.ok) return
+
+            setOrdertop(data)
+        }catch(err){
+            console.error(err)
+        }
+    }
+
     return (
-        <AuthOderAll.Provider value={{AddressPosts, OrderPost, addresss, setOrderId, order, orderFin}}>
+        <AuthOderAll.Provider value={{AddressPosts, OrderPost, addresss, setOrderId, order, orderFin, ordertop, setLimit}}>
             {children}
         </AuthOderAll.Provider>
     )

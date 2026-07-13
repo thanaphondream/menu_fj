@@ -11,7 +11,6 @@ import {
 import { useState,useEffect } from "react";
 import L from "leaflet";
 import 'leaflet/dist/leaflet.css';
-import { useOrderAll } from "../context/Address-Order-PeymentContext";
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -48,42 +47,11 @@ const shopPosition: [number, number] = [
 function LocationMarkers({
     onSelect,
 }: LeafletMapProps) {
-    const { addresss } = useOrderAll()
     const [position, setPosition] = useState<[number, number] | null>(null);
 
     const [address, setAddress] =useState<Location>();
 
     type Postitions = (pos: [number, number]) => number;
-
-
-    useEffect(() => {
-        if (addresss?.lat && addresss?.lng) {
-            const pos: [number, number] = [
-                Number(addresss.lat),
-                Number(addresss.lng),
-            ];
-
-            setPosition(pos);
-
-            const distance = DistanceFn(pos);
-
-            const parts = addresss.address.split(",");
-
-            const data: Location = {
-                village: parts[1] ?? "",
-                municipality: parts[2] ?? "",
-                province: parts[3] ?? "",
-                county: parts[2] ?? "",
-                distance,
-            };
-
-            const datas: string = String(data.village) + data.municipality + data.county
-
-            setAddress(data);
-
-            onSelect(pos, data, datas);
-        }
-    }, [addresss]);
 
     useMapEvents({
         async click(e) {
@@ -137,7 +105,6 @@ function LocationMarkers({
                             {address.village},
                             {address.municipality},
                             {address.province}
-                            {addresss? addresss.home: ''}
                         </>
                     ) : (
                         "กำลังค้นหา..."

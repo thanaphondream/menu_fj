@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function Orders() {
     const { orderFin } = useOrderAll();
+    console.log("orderFin: ", orderFin)
     const rounter = useRouter()
 
     if (!orderFin || orderFin.length === 0) {

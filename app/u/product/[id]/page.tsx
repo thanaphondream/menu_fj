@@ -21,6 +21,8 @@ export default function Product({params}:Props) {
     const [cartn, setCartn] = useState<number>(1)
     const [selectedImage, setSelectedImage] = useState("");
 
+    const [cartloading, setCartLoading] = useState<boolean>(false)
+
     const token = localStorage.getItem('token')
     const router = useRouter();
 
@@ -28,7 +30,7 @@ export default function Product({params}:Props) {
         const menuRestapi = async () => {
             try{
                 const { id } = await params;
-                const menu = await fetch("https://menu-back-hemk.onrender.com/menuitem/menuItem/"+id)
+                const menu = await fetch("http://localhost:8001/menuitem/menuItem/"+id)
                 const menu_json= await menu.json()
                 setMenu(menu_json.menuItem)
                 setSelectedImage(menu_json.menuItem.image);
@@ -49,8 +51,10 @@ export default function Product({params}:Props) {
 
     async function CheckUser(token: string) {
         try {
-            const rs = await fetch("https://menu-back-hemk.onrender.com/api/me", {
-                credentials: "include"
+            const rs = await fetch("http://localhost:8001/api/me", {
+                 headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
             })
 
             if (!rs.ok) return false
@@ -66,13 +70,15 @@ export default function Product({params}:Props) {
 
     const PostApiCart = async () => {
         try {
-            // const token = localStorage.getItem('token')
-            // if (!token) {
-            //     alert("No token")
-            //     return
-            // }
 
-            const users = await CheckUser("ffdd")
+            setCartLoading(true)
+            const token = localStorage.getItem('token')
+            if (!token) {
+                alert("No token")
+                return
+            }
+
+            const users = await CheckUser(token)
 
             if (!users) {
                 alert("Login not found")
@@ -87,8 +93,11 @@ export default function Product({params}:Props) {
             CartSave(carts)
         } catch (err) {
             console.error(err)
+        }finally {
+            setCartLoading(false)
         }
     }
+
     return(
         <div>
              <button
@@ -105,17 +114,13 @@ export default function Product({params}:Props) {
                         className="main-image"
                     />
                    <div className="thumbnail-container">
-                        <img src="https://i.pinimg.com/1200x/fe/12/a3/fe12a36a4f8dd44542b357204a7f2a10.jpg" alt="" onClick={() => setSelectedImage("https://i.pinimg.com/1200x/fe/12/a3/fe12a36a4f8dd44542b357204a7f2a10.jpg")}/>
-                        <img src="https://i.pinimg.com/736x/4f/a4/71/4fa47125bb7310cd4f6e69c5b309f1ba.jpg" alt="" onClick={() => setSelectedImage("https://i.pinimg.com/736x/4f/a4/71/4fa47125bb7310cd4f6e69c5b309f1ba.jpg")}/>
                         <img src={menu?.image} alt="" onClick={() => setSelectedImage(String(menu?.image))}/>
-                        <img src={menu?.image} alt="" onClick={() => setSelectedImage(String(menu?.image))}/>
-                        <img src={menu?.image} alt="" onClick={() => setSelectedImage(String(menu?.image))}/>
-                        <img src="https://i.pinimg.com/736x/23/48/42/234842d2343509b24b334350f99ac3f5.jpg" alt="" onClick={() => setSelectedImage("https://i.pinimg.com/736x/23/48/42/234842d2343509b24b334350f99ac3f5.jpg")}/>
-                        <img src={menu?.image} alt="" onClick={() => setSelectedImage(String(menu?.image))}/>
-                        <img src={menu?.image} alt="" onClick={() => setSelectedImage(String(menu?.image))}/>
-                        <img src="https://i.pinimg.com/736x/f8/e1/65/f8e165424415a8cde098aae9a1f3a85b.jpg" alt="" onClick={() => setSelectedImage("https://i.pinimg.com/736x/f8/e1/65/f8e165424415a8cde098aae9a1f3a85b.jpg")}/>
-                        <img src={menu?.image} alt="" />
-                        <img src={menu?.image} alt="" />
+                        {menu?.images?.map((img, index) => (
+                            <div key={index + 1}>
+                                <img src={img} alt="" onClick={() => setSelectedImage(String(img))}/>
+                            </div>
+                        ))}
+
                     </div>
                 </div>
                 <div className="box-text">
@@ -147,6 +152,14 @@ export default function Product({params}:Props) {
                 </button>
                 </div>
            </div>
+            {cartloading && (
+                <div className="loading">
+                    <div className="loading-box">
+                        <div className="spinner"></div>
+                        <p>กำลังเพิ่มสินค้าลงตะกร้า...</p>
+                    </div>
+                </div>
+            )}   
         </div>
     )
 }

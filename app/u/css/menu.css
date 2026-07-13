@@ -1,0 +1,141 @@
+.menu-container{
+    width: 90%;
+    max-width: 1300px;
+    margin: 30px auto;
+}
+
+.menu-tab{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.menu-tab button{
+    padding: 12px 28px;
+    border: none;
+    border-radius: 30px;
+    background: #f3f3f3;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.menu-tab button:hover{
+    background: #ff7a00;
+    color: white;
+}
+
+.menu-tab .active{
+    background: #ff7a00;
+    color: white;
+}
+
+/* Grid */
+.menu-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap: 25px;
+}
+
+.menu-card{
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    transition: .25s;
+    cursor: pointer;
+}
+
+.menu-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+}
+
+.menu-card img{
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.menu-info{
+    padding: 15px;
+}
+
+.menu-info h3{
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.menu-info p{
+    margin: 8px 0;
+    color: #777;
+    font-size: 14px;
+    height: 40px;
+    overflow: hidden;
+}
+
+.menu-info strong{
+    color: #ff7a00;
+    font-size: 18px;
+}
+
+.menu-grid a{
+    text-decoration: none;
+}
+
+.loading{
+    text-align: center;
+    margin: 25px 0;
+    font-size: 16px;
+    color: gray;
+}
+
+@media (max-width: 768px){
+
+    .menu-container{
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .menu-tab{
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .menu-tab button{
+        flex: 1;
+        min-width: 120px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .menu-grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .menu-card img{
+        height: 150px;
+    }
+
+    .menu-info{
+        padding: 12px;
+    }
+
+    .menu-info h3{
+        font-size: 16px;
+    }
+
+    .menu-info p{
+        font-size: 13px;
+        height: 36px;
+    }
+
+    .menu-info strong{
+        font-size: 16px;
+    }
+}

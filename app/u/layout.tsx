@@ -212,7 +212,7 @@ export default function UserLayout({
                 className="nav-link"
                 onClick={() => setOpens(false)}
             >
-                <div className="flex items-center gap-[5px]">
+                <div className="flex items-center gap-[5px] text-black">
                   {tab.icon}
                   <p>{tab.name}</p>
                </div>

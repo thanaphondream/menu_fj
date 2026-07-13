@@ -24,15 +24,6 @@ export default function Addred() {
     const [addresApi, setAddressApi] = useState<string>("")
     const [homenumber, setHomeNember] = useState<string>("")
     const [phon, setPhon] = useState<string>("")
-    const [initialData, setInitialData] = useState({
-        phon: "",
-        customerName: "",
-        addresApi: "",
-        homenumber: "",
-        lat: "",
-        lng: "",
-        distance: ""
-    })
 
     const [isfase, setIsfase] = useState<boolean>(true)
     const [notDefount, setnotDefount] = useState<string>()
@@ -50,59 +41,6 @@ export default function Addred() {
             setCustomerName(user.username);
         }
     }, [user]);
-
-    useEffect(() => {
-        if (addresss) {
-               if(address?.village?.length){
-            console.log("fffafdas",address)
-            const data: string = address.village + "," + address.county +"," + address.province
-            console.log(data)
-            setAddressApi(data)
-            }
-        } if(addresss){
-            const data = {
-                phon: addresss.phone || "",
-                addresApi:
-                    addresss.address || "",
-                homenumber:
-                    addresss.home || "",
-                customerName:
-                    addresss.username || "",
-
-                lat: addresss.lat || "",
-                lng: addresss.lng || "",
-                distance: addresss.distance || ""
-
-            };
-
-            console.log(data.addresApi)
-
-            setPhon(data.phon);
-            setAddressApi(data.addresApi);
-            setHomeNember(data.homenumber);
-            setCustomerName(data.customerName);
-
-            setInitialData(data);
-        }
-    }, [ address, addresss]);
-
-    // useEffect(() => {
-    //     if(address?.village?.length){
-    //         console.log("fffafdas",address)
-    //         const data: string = address.village + "," + address.county +"," + address.province
-    //         console.log(data)
-    //         setAddressApi(data)
-    //     }
-    // }, [address])
-
-    const isChanged =
-        phon !== initialData.phon ||
-        customerName !== initialData.customerName ||
-        addresApi !== initialData.addresApi ||
-        homenumber !== initialData.homenumber ||
-        String(position?.[0] ?? "") !== initialData.lat ||
-        String(position?.[1] ?? "") !== initialData.lng;
-        distance !== initialData.distance;
 
     const CheckDataAddress = (): boolean => {
         if (phon.trim() === "") {
@@ -162,20 +100,9 @@ export default function Addred() {
         try {
             await AddressPosts(data);
 
-            setInitialData({
-                phon,
-                customerName,
-                addresApi,
-                homenumber,
-                lat: String(position?.[0] ?? ""),
-                lng: String(position?.[1] ?? ""),
-                distance,
-            });
 
         } catch (err) {
             console.error(err);
-            setIsfase(false);
-            setnotDefount("บันทึกข้อมูลไม่สำเร็จ");
         }
     };
     return (
@@ -195,7 +122,6 @@ export default function Addred() {
                             <input
                                 type="text"
                                 value={customerName}
-                                onChange={(e) => setCustomerName(e.target.value || "")}
                             />
                         </div>
                         <div className="box-ipu01">
@@ -204,16 +130,6 @@ export default function Addred() {
                             type="text" 
                             value={phon} 
                             maxLength={10}
-                            className={`phon ${
-                                !isfase && notDefount === "ไม่มีเบอร์โทรศัพท์"? "iso": ""
-                            }`}
-                            onChange={(e) => {
-                                const value = e.target.value.replace(/\D/g, "");
-
-                                setPhon(value);
-                                setIsfase(true);
-                                setnotDefount("");
-                            }}
                         />
                         {notDefount === "ไม่มีเบอร์โทรศัพท์" && (
                             <div>
@@ -255,11 +171,7 @@ export default function Addred() {
                                 className={`phon ${
                                     !isfase && notDefount === "ไม่มีข้อมูลสถานที่จัดสัง"? "iso": ""
                                 }`} 
-                                onChange={(e) => {
-                                    setHomeNember(e.target.value)
-                                    setIsfase(true);
-                                    setnotDefount("");
-                            }}/>
+                            />
                             {notDefount === "ไม่มีข้อมูลสถานที่จัดสัง" && (
                                 <div>
                                     <p className="text-red-600">{notDefount}</p>
@@ -272,15 +184,6 @@ export default function Addred() {
                             <input 
                             type="text" 
                             value={addresApi || "เลือกที่อยู่ในแผ่นที่"}
-                              className={`phon ${
-                                !isfase && notDefount === "เลือกข้อมูลปักมุดในแผนที่"? "iso": ""
-                            }`}
-                            onChange={(e)=> {
-                               if(addresApi.length > 0){
-                                 setIsfase(true);
-                                setnotDefount("");
-                               }
-                            }}
                             />
 
                             {notDefount === "เลือกข้อมูลปักมุดในแผนที่" ? (
@@ -304,11 +207,7 @@ export default function Addred() {
                         </div>
                         <div>
                             <button 
-                            onClick={() => PostAddres()} 
-                            disabled={!isChanged}
-                            className={`btn-save ${
-                                !isChanged ? "disabled" : ""
-                            }`}
+                           
                             >บันทึก</button>
                         </div>
                     </div>

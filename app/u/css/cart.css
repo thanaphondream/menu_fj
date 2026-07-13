@@ -45,7 +45,6 @@
     justify-content: center;
     width: 200px;
     gap: 8px;
-    /* flex: 1; */
 }
 
 .box-text01 p:first-child {
@@ -71,6 +70,7 @@
     padding: 5px;
     border-radius: 10px;
 }
+
 
 .box-quantity button {
     width: 20px;
@@ -113,9 +113,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-
-    /* max-width: 400px; */
-    /* width: 100%; */
 }
 
 .box-total{
@@ -134,8 +131,6 @@
     border-radius: 12px;
     background-color: rgb(232, 129, 19);
     color: white;
-    /* font-size: 16px;
-    font-weight: 600; */
     cursor: pointer;
 
     transition: all 0.3s ease;
@@ -153,4 +148,118 @@
 
 .bt-total:active{
     transform: translateY(0);
+}
+
+.empty-cart{
+    min-height:70vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    text-align:center;
+}
+
+.empty-cart h2{
+    font-size:32px;
+}
+
+.empty-cart p{
+    color:#777;
+    font-size:18px;
+}
+
+
+@media (max-width: 768px){
+
+    .catd-cartItem{
+        padding: 15px;
+    }
+
+    .box-text h1{
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .box-text p{
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .box-cartItem{
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .box-text01{
+        width: auto;
+        flex: 1;
+    }
+
+    .box-total{
+        max-width: 100%;
+        gap: 30px;
+    }
+
+    .bt-total{
+        width: 100%;
+    }
+}
+
+/* Tablet */
+@media (max-width: 768px){
+
+    .catd-cartItem{
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .box-text{
+        text-align: center;
+    }
+
+    .box-text h1{
+        font-size: 30px;
+    }
+
+    .box-text p{
+        font-size: 18px;
+    }
+
+    .box-cartItem{
+        gap: 15px;
+        padding: 12px;
+    }
+
+    .box-img img{
+        width: 80px;
+        height: 80px;
+    }
+
+    .box-text01{
+        width: auto;
+        flex: 1;
+    }
+
+    .box-text01 p:first-child{
+        font-size: 16px;
+    }
+
+    .box-text01 p:last-child{
+        font-size: 13px;
+    }
+
+    .box-price{
+        font-size: 15px;
+    }
+
+    .box-total{
+        max-width: 100%;
+        gap: 45px;
+    }
+
+    .bt-total{
+        width: 100%;
+    }
+
 }

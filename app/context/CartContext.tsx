@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { useAuth } from "./AuthContext"
+import { useRouter } from "next/navigation";
 
 export interface Cart {
     menuItemId: number
@@ -41,6 +42,7 @@ type CartContextType = {
     loadings: boolean
     UpdateQuantity: (quantity: number, id: number) => Promise<void>
     CartsAPI: () => Promise<void>
+    cartloading: boolean
 }
 
 const AuthContextCart = createContext<CartContextType | null>(null)
@@ -50,7 +52,19 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
     const [cart, setCart] = useState<CartModel | null>(null)
     const [loadings, setLoading] = useState(true)
 
+    const [cartloading, setCartLoading] = useState<boolean>(false);
+
     const {user} = useAuth()
+
+    const router = useRouter();
+
+    const token = localStorage.getItem("token")
+
+    // useEffect(() => {
+    //     if(!token) {
+    //         return router.prefetch("/login")
+    //     }
+    // }, [!token])
 
     const getToken = () => {
         if (typeof window === "undefined") return null
@@ -71,9 +85,11 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
                 }
 
                 const rs = await fetch(
-                    "https://menu-back-hemk.onrender.com/cartitme/count",
+                    "http://localhost:8001/cartitme/count",
                     {
-                        credentials: "include",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
                     }
                 );
 
@@ -108,17 +124,17 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
 
     const CartSave = async (carts: Cart) => {
         try {
-            // const token = getToken()
-            // if (!token) return
-            //  if(!user){
-            //     return
-            // }
-            const res = await fetch("https://menu-back-hemk.onrender.com/cartitme/carts", {
+            const token = getToken()
+            if (!token) return
+             if(!user){
+                return
+            }
+            const res = await fetch("http://localhost:8001/cartitme/carts", {
                 method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                 headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
                 body: JSON.stringify(carts)
             })
              const data = await res.json()
@@ -135,6 +151,8 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
 
         } catch (err) {
             console.error(err)
+        }finally{
+            setCartLoading(false)
         }
     }
 
@@ -145,8 +163,10 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
              if(!user){
                 throw new Error("เกิดข้อผิดพลาด")
             }
-            const rs = await fetch("https://menu-back-hemk.onrender.com/cartitme/cart", {
-               credentials: "include"
+            const rs = await fetch("http://localhost:8001/cartitme/cart", {
+                headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
             })
             const data = await rs.json()
             if (!rs.ok) {
@@ -163,12 +183,12 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
 
     const UpdateQuantity = async (quantity: number, id: number) => {
         try{
-            const res = await fetch ('https://menu-back-hemk.onrender.com/cartitme/count' + '/' + id, {
+            const res = await fetch ('http://localhost:8001/cartitme/count' + '/' + id, {
                 method: "PUT",
-                credentials: "include",
-                  headers: {
-                    "Content-Type": "application/json",
-                },
+                 headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
                 body: JSON.stringify({quantity})
             })
 
@@ -184,7 +204,7 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <AuthContextCart.Provider value={{ count, CartSave, refreshCart, cart, loadings, UpdateQuantity, CartsAPI }}>
+        <AuthContextCart.Provider value={{ count, CartSave, refreshCart, cart, loadings, UpdateQuantity, CartsAPI, cartloading }}>
             {children}
         </AuthContextCart.Provider>
     )

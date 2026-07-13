@@ -23,8 +23,13 @@ export default function Product({params}:Props) {
 
     const [cartloading, setCartLoading] = useState<boolean>(false)
 
-    const token = localStorage.getItem('token')
     const router = useRouter();
+
+    const [token, setToken] = useState("");
+
+    useEffect(() => {
+        setToken(localStorage.getItem("token") || "");
+    }, []);
 
     useEffect(() => {
         const menuRestapi = async () => {
@@ -72,7 +77,7 @@ export default function Product({params}:Props) {
         try {
 
             setCartLoading(true)
-            const token = localStorage.getItem('token')
+            
             if (!token) {
                 alert("No token")
                 return

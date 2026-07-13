@@ -98,7 +98,11 @@ export const AuthOrderAll = ({ children }: { children: React.ReactNode }) => {
     const {user, loading} = useAuth()
     
     const router = useRouter();
-    const token = localStorage.getItem("token")
+    const [token, setToken] = useState("");
+
+    useEffect(() => {
+        setToken(localStorage.getItem("token") || "");
+    }, []);
 
     const AddressPosts = async(address: Address) => {
         try{

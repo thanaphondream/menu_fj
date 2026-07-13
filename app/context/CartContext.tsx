@@ -58,8 +58,12 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
 
     const router = useRouter();
 
-    const token = localStorage.getItem("token")
+    const [token, setToken] = useState("");
 
+    useEffect(() => {
+        setToken(localStorage.getItem("token") || "");
+    }, []);
+    
     // useEffect(() => {
     //     if(!token) {
     //         return router.prefetch("/login")

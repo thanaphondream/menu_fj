@@ -85,7 +85,7 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
                 }
 
                 const rs = await fetch(
-                    "http://localhost:8001/cartitme/count",
+                    "https://menu-back-hemk.onrender.com/cartitme/count",
                     {
                     headers: {
                         "Authorization": `Bearer ${token}`
@@ -129,7 +129,7 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
              if(!user){
                 return
             }
-            const res = await fetch("http://localhost:8001/cartitme/carts", {
+            const res = await fetch("https://menu-back-hemk.onrender.com/cartitme/carts", {
                 method: "POST",
                  headers: {
                         "Content-Type": "application/json",
@@ -163,7 +163,7 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
              if(!user){
                 throw new Error("เกิดข้อผิดพลาด")
             }
-            const rs = await fetch("http://localhost:8001/cartitme/cart", {
+            const rs = await fetch("https://menu-back-hemk.onrender.com/cartitme/cart", {
                 headers: {
                         "Authorization": `Bearer ${token}`
                     },
@@ -183,7 +183,7 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
 
     const UpdateQuantity = async (quantity: number, id: number) => {
         try{
-            const res = await fetch ('http://localhost:8001/cartitme/count' + '/' + id, {
+            const res = await fetch ('https://menu-back-hemk.onrender.com/cartitme/count' + '/' + id, {
                 method: "PUT",
                  headers: {
                         "Content-Type": "application/json",
@@ -196,7 +196,7 @@ export const AuthPCart = ({ children }: { children: React.ReactNode }) => {
             if(!res.ok){
                 throw Error("Error :", rs_json.message || "เกิดข้อผิดพลาด")
             }
-            await CartsAPI()
+            // await CartsAPI()
         }
         catch(err){
             console.error(err)

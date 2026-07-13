@@ -41,7 +41,7 @@ export default function MenuPage() {
       try {
 
           const res = await fetch(
-              `http://localhost:8001/menuitem/menu?page=1&limit=6`
+              `https://menu-back-hemk.onrender.com/menuitem/menu?page=1&limit=6`
           )
 
           const data: ApiResponse = await res.json()
@@ -76,7 +76,7 @@ export default function MenuPage() {
     try {
 
         const res = await fetch(
-            `http://localhost:8001/menuitem/menu?page=${page}&limit=5`
+            `https://menu-back-hemk.onrender.com/menuitem/menu?page=${page}&limit=5`
         )
 
         const data: ApiResponse = await res.json()

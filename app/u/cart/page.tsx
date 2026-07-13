@@ -13,49 +13,73 @@ export default function Carts() {
     const {cart, loadings, UpdateQuantity} = useCart()
     const [quantitys, setQuantity] = useState<number>()
 
+    const [cartloading, setCartLoading] = useState<boolean>(false)
+    const [cartItems, setCartItems] = useState<CartModel["cart"]["items"]>([])
     useEffect(() => {
         if (!loading && !user) {
             router.replace("/login")
         }
     }, [loading, user, router])
+
+    useEffect(() => {
+        if (cart?.cart.items) {
+            setCartItems(cart.cart.items)
+        }
+    }, [cart])
     
-    const updataeQuantity = (
+    const updataeQuantity = async (
         quantity: number,
         id: number,
         increase: boolean
     ) => {
-        try {
-            let newQuantity = quantity;
+        let newQuantity = quantity;
 
-            if (increase) {
-                if (quantity >= 10) {
-                    alert("เพิ่มสินค้าได้สูงสุด 10 ชิ้น");
-                    return;
-                }
+        if (increase) {
 
-                newQuantity = quantity + 1;
-            } else {
-                if (quantity <= 1) {
-                    const confirmDelete = window.confirm(
-                        "คุณต้องการลบสินค้านี้ออกจากตะกร้าหรือไม่?"
-                    );
-
-                    if (!confirmDelete) return;
-
-                    UpdateQuantity(0, id);
-                    return;
-                }
-
-                newQuantity = quantity - 1;
+            if (quantity >= 10) {
+                alert("เพิ่มสินค้าได้สูงสุด 10 ชิ้น");
+                return;
             }
 
-            UpdateQuantity(newQuantity, id);
+            newQuantity++;
+
+        } else {
+
+            if (quantity <= 1) {
+
+                const confirmDelete = window.confirm(
+                    "คุณต้องการลบสินค้านี้ออกจากตะกร้าหรือไม่?"
+                );
+
+                if (!confirmDelete) return;
+
+                newQuantity = 0;
+
+            } else {
+
+                newQuantity--;
+
+            }
+        }
+
+        setCartItems(prev =>
+            prev.map(item =>
+                item.id === id
+                    ? { ...item, quantity: newQuantity }
+                    : item
+            )
+        );
+
+        try {
+
+            await UpdateQuantity(newQuantity, id);
 
         } catch (err) {
-            console.error(err);
-        }
-    };
 
+            console.error(err);
+
+        }
+    }
 
 
     if (loading) {
@@ -109,7 +133,7 @@ export default function Carts() {
                 </div>
                 <br />
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px'}}>
-                    {cart?.cart.items.map((m) => (
+                    {cartItems?.map((m) => (
                         <div className="box-cartItem" key={m.id}>
                             <div className="box-img">
                                 <img src={m.menuItem.image} alt={m.menuItem.name} />
@@ -198,8 +222,6 @@ export default function Carts() {
                    }}>ชำระเงิน </button>
                 </div>
             </div>
-
-             
         </div>
     )
 }

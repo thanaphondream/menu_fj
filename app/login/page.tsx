@@ -26,7 +26,7 @@ export default function Login() {
 
     const usersPost = async () => {
     try {
-        const rs = await fetch("http://localhost:8001/api/login", {
+        const rs = await fetch("https://menu-back-hemk.onrender.com/api/login", {
         method: "POST",
          headers: {
                     "Content-Type": "application/json",

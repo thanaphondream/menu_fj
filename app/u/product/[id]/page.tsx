@@ -30,7 +30,7 @@ export default function Product({params}:Props) {
         const menuRestapi = async () => {
             try{
                 const { id } = await params;
-                const menu = await fetch("http://localhost:8001/menuitem/menuItem/"+id)
+                const menu = await fetch("https://menu-back-hemk.onrender.com/menuitem/menuItem/"+id)
                 const menu_json= await menu.json()
                 setMenu(menu_json.menuItem)
                 setSelectedImage(menu_json.menuItem.image);
@@ -51,7 +51,7 @@ export default function Product({params}:Props) {
 
     async function CheckUser(token: string) {
         try {
-            const rs = await fetch("http://localhost:8001/api/me", {
+            const rs = await fetch("https://menu-back-hemk.onrender.com/api/me", {
                  headers: {
                         "Authorization": `Bearer ${token}`
                     },

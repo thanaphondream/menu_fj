@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: any) => {
             }
 
             try {
-                const res = await fetch("http://localhost:8001/api/me", {
+                const res = await fetch("https://menu-back-hemk.onrender.com/api/me", {
                      headers: {
                         "Authorization": `Bearer ${token}`
                     },
@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }: any) => {
 
     const logout = async() => {
         try {
-            // const rs = await fetch("http://localhost:8001/api/logout", {
+            // const rs = await fetch("https://menu-back-hemk.onrender.com/api/logout", {
             //     method: "POST",
             //     headers: {
             //         "Authorization": `Bearer ${token}`
@@ -114,7 +114,7 @@ export const AuthProvider = ({ children }: any) => {
      useEffect(() => {
         const MenuRestapi = async () => {
             try{
-                const re = await fetch ("http://localhost:8001/category/category")
+                const re = await fetch ("https://menu-back-hemk.onrender.com/category/category")
                 const r_json: menuAdncategory = await re.json()
                 setMenu(r_json)
             }catch(err){
